@@ -1,1 +1,24 @@
-Hello world
+public class M2048 {
+    static int[] merge(int[] line) {
+        for (int i = 0; i < line.length - 1; i++)
+            for (int j = i + 1; j < line.length; j++)
+            {
+                if (line[j] == 0)
+                    continue;
+                if (line[i] == line[j])
+                {
+                    line[i] += line[j];
+                    line[j] = 0;
+                    break;
+                }
+                if (line[j] != 0 && line[i] == 0)
+                {
+                    line[i] += line[j];
+                    line[j] = 0;
+                    continue;
+                }
+                break;
+            }
+        return line;
+    }
+}
