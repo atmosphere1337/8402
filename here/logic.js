@@ -58,3 +58,4 @@ function square(rotation)
 }
 square(4);
 console.table(map);
+// TEST BRANCH
