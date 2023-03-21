@@ -2,6 +2,11 @@ let map = [[0,0,0,0],
            [0,8,4,0],
            [2,2,4,4],
            [2,0,2,4]];
+
+let blank = [[0,0,0,0],
+             [0,0,0,0],
+             [0,0,0,0],
+             [0,0,0,0]];
 let current_score = 0;
 function line( x )
 {
@@ -12,6 +17,7 @@ function line( x )
         if (x[i] == x[i+1])
         {
             x[i+1] = 2 * x[i+1];
+            current_score += x[i+1];
             i++;
         }
         out.push(x[i]);
