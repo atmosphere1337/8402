@@ -1,24 +1,33 @@
-public class M2048 {
-    static int[] merge(int[] line) {
-        for (int i = 0; i < line.length - 1; i++)
-            for (int j = i + 1; j < line.length; j++)
-            {
-                if (line[j] == 0)
-                    continue;
-                if (line[i] == line[j])
-                {
-                    line[i] += line[j];
-                    line[j] = 0;
-                    break;
-                }
-                if (line[j] != 0 && line[i] == 0)
-                {
-                    line[i] += line[j];
-                    line[j] = 0;
-                    continue;
-                }
-                break;
-            }
-        return line;
-    }
-}
+<link rel = "stylesheet" href="graphics.css" >
+<html>
+    <div>
+    <div>Hello</div>
+    <div class = "box">
+        <div class = "row row1">
+            <div ><div class = "cell" id = "dot1">2</div></div>
+            <div ><div class = "cell" id = "dot2">0</div></div>
+            <div ><div class = "cell" id = "dot3">0</div></div>
+            <div ><div class = "cell" id = "dot4">0</div></div>
+        </div>
+        <div class = "row row2">
+            <div ><div class = "cell" id = "dot5">0</div></div>
+            <div ><div class = "cell" id = "dot6">0</div></div>
+            <div ><div class = "cell" id = "dot7">0</div></div>
+            <div ><div class = "cell" id = "dot8">0</div></div>
+        </div>
+        <div class = "row row3">
+            <div ><div class = "cell" id = "dot9">0</div></div>
+            <div ><div class = "cell" id = "dot10">0</div></div>
+            <div ><div class = "cell" id = "dot11">0</div></div>
+            <div ><div class = "cell" id = "dot12">0</div></div>
+        </div>
+        <iv class = "row row4">
+            <div ><div class = "cell" id = "dot13">0</div></div>
+            <div ><div class = "cell" id = "dot14">0</div></div>
+            <div ><div class = "cell" id = "dot15">0</div></div>
+            <div ><div class = "cell" id = "dot16">0</div></div>
+        </div>
+    </div>
+    <script src = "logic.js"></script>
+
+</html>

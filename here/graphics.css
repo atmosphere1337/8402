@@ -1,0 +1,31 @@
+p
+{
+   background-color: blue; 
+}
+.box
+{
+   overflow: hidden;
+   position: absolute;
+   top : 23%;
+   left : 35%;
+   width: 30%;
+   height: 53%;
+}
+
+.row > *
+{
+   overflow: hidden;
+   float: left;
+   background-color:rgb(255, 94, 0);
+   width: 25%;
+   height: 25%;
+}
+.cell
+{
+   width: 90%;
+   height: 90%;
+   background-color: rgb(206, 206, 168);
+   margin: 5%;
+   font-size:400%;
+   text-align: center;
+}

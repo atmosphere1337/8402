@@ -49,18 +49,101 @@ function square(rotation)
                 map[i] = line(map[i].reverse()).reverse(); // 
             break;
         case 4: // down
-        for (i = 0; i < 4; i++)
-        {
-            buf = line([map[3][i], map[2][i], map[1][i], map[0][i]]);
-            map[0][i] = buf[3];
-            map[1][i] = buf[2];
-            map[2][i] = buf[1];
-            map[3][i] = buf[0];                
-        }
+            for (i = 0; i < 4; i++)
+            {
+                buf = line([map[3][i], map[2][i], map[1][i], map[0][i]]);
+                map[0][i] = buf[3];
+                map[1][i] = buf[2];
+                map[2][i] = buf[1];
+                map[3][i] = buf[0];                
+            }
             break;
         default:
             break;
     }
 }
-square(4);
-console.table(map);
+function spawn()
+{
+    let arr = [];
+    let powers = [2,4,8,16];
+    for (let i = 0; i < 4; i++)
+        for (let j = 0; j < 4; j++)
+        {
+            if (map[i][j] == 0)
+            {
+                arr.push({"i" : i, "j" : j});
+            } 
+        }
+    if (Math.random() < 0.5)
+    {
+        let point = arr[Math.floor(Math.random() * arr.length)];
+        let pwr = powers[Math.floor(Math.random() * powers.length)];
+        map[point.i][point.j] = pwr;
+    }
+}
+spawn();
+
+
+let field = [["dot1",  "dot2",  "dot3",   "dot4"],
+             ["dot5",  "dot6",  "dot7",   "dot8"],
+             ["dot9",  "dot10", "dot11", "dot12"],
+             ["dot13", "dot14", "dot15", "dot16"]];
+
+function print_field(field, document)
+{
+    for (let i = 0; i < 4; i++)                
+        for (let j = 0; j < 4; j++)
+        {
+            let el = document.getElementById(field[i][j]); 
+            if (map[i][j] == 0)
+                el.style.backgroundColor = "gray";
+            if (map[i][j] == 2 || map[i][j] == 4)
+                el.style.backgroundColor = "white";
+            if (map[i][j] == 8 || map[i][j] == 16)
+                el.style.backgroundColor = "yellow";
+            if (map[i][j] == 32 || map[i][j] == 64)
+                el.style.backgroundColor = "orange";
+            if (map[i][j] == 128 || map[i][j] == 256)
+                el.style.backgroundColor = "brown";
+            if (map[i][j] == 512 || map[i][j] == 1024 || map[i][j] == 2048)
+                el.style.backgroundColor = "red";
+            if (map[i][j] >= 100)
+                el.style.fontSize = "300%";
+            if (map[i][j] >= 1000)
+                el.style.fontSize = "200%";
+            el.innerText = (map[i][j] == 0)? "" : map[i][j];
+        }
+}                
+
+print_field(field, document);
+
+document.addEventListener('keypress', 
+(event) => 
+{
+   var code = event.code;
+   if (code == "KeyW")
+   {
+       square(2);
+       spawn();
+       print_field(field, document);
+   }
+   if (code == "KeyS")
+   {
+       square(4);
+       spawn();
+       print_field(field, document);
+   }
+   if (code == "KeyA")
+   {
+       square(1);
+       spawn();
+       print_field(field, document);
+   }
+   if (code == "KeyD")
+   {
+       square(3);
+       spawn();
+       print_field(field, document);
+   }
+}
+, false);
