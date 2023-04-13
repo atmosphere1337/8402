@@ -2,12 +2,23 @@ let map = [[0,0,0,0],
            [0,8,4,0],
            [2,2,4,4],
            [2,0,2,4]];
+map =     [[1024,1024,0,16],
+           [4,2,128,4],
+           [64,16,8,16],
+           [2,8,2,64]];
 
-let blank = [[0,0,0,0],
+map =       [[0,0,0,0],
              [0,0,0,0],
              [0,0,0,0],
-             [0,0,0,0]];
-let current_score = 0;
+             [0,2,0,0]];
+var blank = [[0,0,0,0],
+             [0,0,0,0],
+             [0,0,0,0],
+             [0,2,0,0]];
+var current_score = 0;
+var win = false;
+var lose = false;
+var buf4 = new Array(4);
 function line( x )
 {
     x = x.filter(x=>x!=0);
@@ -108,9 +119,11 @@ function print_field(field, document)
             if (map[i][j] == 512 || map[i][j] == 1024 || map[i][j] == 2048)
                 el.style.backgroundColor = "red";
             if (map[i][j] >= 100)
-                el.style.fontSize = "300%";
+                el.style.fontSize = "300%";//300%
             if (map[i][j] >= 1000)
-                el.style.fontSize = "200%";
+                el.style.fontSize = "200%";//200%
+            if (map[i][j] < 100 )
+                el.style.fontSize = "400%";//400%
             el.innerText = (map[i][j] == 0)? "" : map[i][j];
         }
 }                
@@ -121,29 +134,65 @@ document.addEventListener('keypress',
 (event) => 
 {
    var code = event.code;
+   let buf = JSON.parse(JSON.stringify(map));
    if (code == "KeyW")
    {
        square(2);
-       spawn();
-       print_field(field, document);
    }
    if (code == "KeyS")
    {
        square(4);
-       spawn();
-       print_field(field, document);
    }
    if (code == "KeyA")
    {
        square(1);
-       spawn();
-       print_field(field, document);
    }
    if (code == "KeyD")
    {
        square(3);
+   }
+   if ((JSON.stringify(buf) != JSON.stringify(map)) && (code == "KeyW" || code == "KeyS" || code == "KeyA" || code == "KeyD"))
+   {
        spawn();
        print_field(field, document);
+       document.getElementById("score_val").innerHTML = current_score;
+       if (map.reduce((acc, x)=>acc.concat(x)).includes(2048))
+       {
+           alert("you won! :)");
+           map = JSON.parse(JSON.stringify(blank)); 
+           print_field(field, document);
+           current_score = 0;
+           document.getElementById("score_val").innerHTML = current_score;
+       }
+       return;
+   }
+   if (!map.reduce((acc, x)=>acc.concat(x)).includes(0) && (code == "KeyW" || code == "KeyS" || code == "KeyA" || code == "KeyD"))
+   {
+       buf = JSON.parse(JSON.stringify(map));
+       for (let i = 1; i <= 4; i++) 
+       {
+           square(i);            
+           buf4[i - 1] = JSON.parse(JSON.stringify(map));
+           map = JSON.parse(JSON.stringify(buf)); 
+       }
+       if (JSON.stringify(buf4[0]) == JSON.stringify(buf4[1]) && JSON.stringify(buf4[1]) == JSON.stringify(buf4[2]) && JSON.stringify(buf4[2]) == JSON.stringify(buf4[3]) )
+       {
+           alert("you lost! :(");
+           map = JSON.parse(JSON.stringify(blank)); 
+           print_field(field, document);
+           current_score = 0;
+           document.getElementById("score_val").innerHTML = current_score;
+       }
    }
 }
 , false);
+
+
+
+function restart()
+{
+    map = JSON.parse(JSON.stringify(blank)); 
+    print_field(field, document);
+    current_score = 0;
+    document.getElementById("score_val").innerHTML = current_score;
+}
